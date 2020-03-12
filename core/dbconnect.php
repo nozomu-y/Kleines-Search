@@ -11,4 +11,6 @@ $mysqli = new mysqli($host, $username, $password, $dbname);
 if ($mysqli->connect_error) {
     error_log($mysqli->connect_error);
     exit();
+} else {
+    $mysqli->set_charset('utf8');
 }
