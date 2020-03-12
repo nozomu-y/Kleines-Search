@@ -1,9 +1,9 @@
 <h1 align="center">
-kleines_search
+Kleines Search
 </h1>
 
 <p align="center">
-Site search engine developed for Chor Kleines website with basic authentication.
+Search Engine developed for Chor Kleines website with Basic Authentication.
 </p>
 
 ## License
