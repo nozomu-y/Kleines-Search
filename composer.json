@@ -1,0 +1,5 @@
+{
+    "require": {
+        "youaoi/php-mecab": "^1.0"
+    }
+}
