@@ -1,1 +1,2 @@
-config.php
+*.php
+!config_template.php
