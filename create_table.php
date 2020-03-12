@@ -7,4 +7,14 @@
  * Create tables on initialization
  */
 
-require_once('./core/dbconnect.php');
+require_once(__DIR__ . '/core/dbconnect.php');
+
+// create table if it does not exist
+$query = "CREATE TABLE IF NOT EXISTS table_name(id int(6)";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query failed on line ' . __LINE__ . ' in ' . __FILE__ . ': ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$result->close();
