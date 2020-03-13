@@ -3,8 +3,11 @@ Kleines Search
 </h1>
 
 <p align="center">
-Search Engine developed for Chor Kleines website configured with Basic Authentication.
+Search Engine developed for Chor Kleines Member's Page configured with Basic Authentication.
 </p>
+
+Kleines Search enables you to search whatever information inside the Member's Page.  
+**NOTE** This software is now under development, and not yet deployed for practical use.
 
 ## Libraries
 
@@ -19,8 +22,12 @@ https://github.com/youaoi/php-mecab
 Used in order to parse text into words using morphological analysis  
 Requires [mecab](https://taku910.github.io/mecab/) (EUC-JP)
 
+<div align="center">
+
 ## License
 
-Copyright (c) 2020 Nozomu Yamazaki  
+Copyright &copy; 2020 Nozomu Yamazaki  
 Released under the MIT license  
 https://opensource.org/licenses/mit-license.php
+
+</div>
