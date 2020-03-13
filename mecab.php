@@ -7,7 +7,7 @@
  * analyze text using mecab
  */
 
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 use Youaoi\MeCab\MeCab;
 
