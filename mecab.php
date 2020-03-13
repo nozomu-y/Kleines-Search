@@ -7,18 +7,18 @@
  * analyze text using mecab
  */
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use Youaoi\MeCab\MeCab;
 
 MeCab::setDefaults([
-    // mecabのPATH
+    // path to mecab
     'command' => posix_getpwuid(posix_geteuid())['dir'] . '/usr/local/bin/mecab',
 
-    // 独自の辞書ディレクトリ
+    // path to directory with dictionary
     'dictionaryDir' => posix_getpwuid(posix_geteuid())['dir'] . '/usr/local/lib/mecab/dic/ipadic/',
 
-    // ユーザー辞書
+    // path to user dictionary
     'dictionary' => posix_getpwuid(posix_geteuid())['dir'] . '/usr/local/lib/mecab/dic/user_dic/user_symbols.dic',
 ]);
 
@@ -69,6 +69,7 @@ function analyze(string $text)
             }
         }
         $speech = $result_word['speech'];
+        // exclude words that are unnecessary
         if ($speech == "助詞" || $speech == "記号" || $speech == "助動詞" || $speech == "その他,間投" || $speech == "フィラー" || $speech == "連体詞") {
             continue;
         }
