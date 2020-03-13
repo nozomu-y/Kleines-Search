@@ -1,3 +1,4 @@
 *.php
 !config_template.php
 !dbconnect.php
+*.json
