@@ -3,7 +3,7 @@ Kleines Search
 </h1>
 
 <p align="center">
-Search Engine developed for Chor Kleines website with Basic Authentication.
+Search Engine developed for Chor Kleines website configured with Basic Authentication.
 </p>
 
 ## License
