@@ -25,6 +25,7 @@ function pdftotext(string $pdf)
 
         // configuration of the file to upload
         $meta = new Google_Service_Drive_DriveFile(array(
+            // upload as google document
             'mimeType' => 'application/vnd.google-apps.document'
         ));
 
@@ -35,7 +36,6 @@ function pdftotext(string $pdf)
             'uploadType' => 'multipart',
             'fields' => 'id'
         ));
-
 
         // download the file as text
         $response = $service->files->export($created->id, 'text/plain', array(
