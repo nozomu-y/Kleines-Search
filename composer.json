@@ -1,5 +1,6 @@
 {
     "require": {
-        "youaoi/php-mecab": "^1.0"
+        "youaoi/php-mecab": "^1.0",
+        "google/apiclient": "^2.0"
     }
 }
