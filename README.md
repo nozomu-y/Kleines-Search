@@ -6,6 +6,12 @@ Kleines Search enables you to search whatever information inside the Member's Pa
 
 **NOTE** This software is now under development and not yet deployed for practical use.
 
+## Requirements
+
+- PHP 7.3.14
+- MySQL 5.7
+- mecab of 0.996
+
 ## Libraries
 
 ### Google API Client
