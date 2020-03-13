@@ -15,7 +15,9 @@
  */
 function htmltotext(string $url)
 {
+    // $basic_auth_password defined in the following file
     require(__DIR__ . "/core/config.php");
+
     $data = http_build_query($_POST, "", "&");
     $header = array(
         'Content-Type: application/x-www-form-urlencoded',
