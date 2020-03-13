@@ -4,7 +4,7 @@ Search Engine developed for Chor Kleines Member's Page configured with Basic Aut
 
 Kleines Search enables you to search whatever information inside the Member's Page.
 
-**NOTE** This software is now under development, and not yet deployed for practical use.
+**NOTE** This software is now under development and not yet deployed for practical use.
 
 ## Libraries
 
