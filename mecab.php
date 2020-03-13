@@ -13,13 +13,13 @@ use Youaoi\MeCab\MeCab;
 
 MeCab::setDefaults([
     // mecabのPATH
-    'command' => '/home/chorkleines/usr/local/bin/mecab',
+    'command' => posix_getpwuid(posix_geteuid())['dir'] . '/usr/local/bin/mecab',
 
     // 独自の辞書ディレクトリ
-    'dictionaryDir' => '/home/chorkleines/usr/local/lib/mecab/dic/ipadic/',
+    'dictionaryDir' => posix_getpwuid(posix_geteuid())['dir'] . '/usr/local/lib/mecab/dic/ipadic/',
 
     // ユーザー辞書
-    'dictionary' => '/home/chorkleines/usr/local/lib/mecab/dic/user_dic/user_symbols.dic',
+    'dictionary' => posix_getpwuid(posix_geteuid())['dir'] . '/usr/local/lib/mecab/dic/user_dic/user_symbols.dic',
 ]);
 
 /**
