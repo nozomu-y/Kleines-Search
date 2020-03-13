@@ -14,3 +14,4 @@ $host = "";
 $username = "";
 $password = "";
 $dbname = "";
+$basic_auth_password = "user:password";
