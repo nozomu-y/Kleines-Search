@@ -14,7 +14,7 @@ require_once __DIR__ . '/vendor/autoload.php';
  * @param string $pdf
  * @return string
  */
-function pdftotext(string $pdf)
+function pdf_to_text(string $pdf)
 {
     try {
         $client = getClient();
