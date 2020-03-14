@@ -7,11 +7,14 @@
  * Template for config.php
  * Edit and save this file as config.php
  * 
- * Configuration for database connection
+ * Configuration for database connection and basic authentication
  */
 
+// configuration for database connection
 $host = "";
 $username = "";
 $password = "";
 $dbname = "";
-$basic_auth_password = "user:password";
+
+// configuration for basic authentication
+$basic_auth_password = "username:password";
