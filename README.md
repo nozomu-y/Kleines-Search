@@ -25,7 +25,7 @@ Used in order to parse text into words using morphological analysis
 Requires [mecab](https://taku910.github.io/mecab/) (EUC-JP)  
 https://github.com/youaoi/php-mecab
 
-**NOTE** The libraries above are not managed by git
+**NOTE** The libraries above are not managed by git.
 
 ## License
 
