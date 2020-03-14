@@ -1,8 +1,8 @@
 # Kleines Search
 
-Search Engine developed for Chor Kleines Member's Page configured with Basic Authentication.
+Search Engine developed for Chor Kleines website's Member's Area configured with Basic Authentication.
 
-Kleines Search enables you to search whatever information inside the Member's Page.
+Kleines Search enables you to search whatever information inside the Member's Area.
 
 **NOTE** This software is now under development and not yet deployed for practical use.
 
