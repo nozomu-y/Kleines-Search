@@ -16,14 +16,16 @@ Kleines Search enables you to search whatever information inside the Member's Ar
 
 ### Google API Client
 
-https://github.com/googleapis/google-api-php-client  
-Used in order to extract text from PDF files via Google Drive and Google Docs
+Used in order to extract text from PDF files via Google Drive and Google Docs  
+https://github.com/googleapis/google-api-php-client
 
 ### youaoi/php-mecab
 
-https://github.com/youaoi/php-mecab  
 Used in order to parse text into words using morphological analysis  
-Requires [mecab](https://taku910.github.io/mecab/) (EUC-JP)
+Requires [mecab](https://taku910.github.io/mecab/) (EUC-JP)  
+https://github.com/youaoi/php-mecab
+
+**NOTE** The libraries above are not managed by git
 
 ## License
 
