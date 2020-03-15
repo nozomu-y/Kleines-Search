@@ -25,6 +25,7 @@ function insert_word(array $word, int $doc_id)
     }
     $result->close();
 
+    // increment the number of words appeared
     $query = "UPDATE inverted_index SET $doc_id = $doc_id + 1 WHERE word = '$word'";
     $result = $mysqli->query($query);
     if (!$result) {
