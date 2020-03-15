@@ -58,7 +58,7 @@ function insert_document(string $url, string $title)
     }
     // add column if not exists
     if (!$col_exists) {
-        $query = "ALTER TABLE inverted_index ADD COLUMN `$doc_id` int(5)";
+        $query = "ALTER TABLE inverted_index ADD COLUMN `$doc_id` int(5) DEFAULT '0'";
         $result = $mysqli->query($query);
         if (!$result) {
             print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
