@@ -33,6 +33,12 @@ function get_html(string $url)
     $options = stream_context_create($options);
     $html = file_get_contents($url, false, $options);
 
+    if (preg_match("/<title>(.*?)<\/title>/i", $html, $matches)) {
+        $title = $matches[1];
+    } else {
+        $title = "";
+    }
+
     $location = '';
     if ($http_response_header[0] != "HTTP/1.1 200 OK") {
         foreach ($http_response_header as $response) {
@@ -46,6 +52,7 @@ function get_html(string $url)
     }
     $response = array(
         "html"  => $html,
+        "title" => $title,
         "url"   => $url
     );
     return $response;
