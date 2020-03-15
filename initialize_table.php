@@ -7,7 +7,7 @@
  * create tables on initialization
  */
 
-require_once(__DIR__ . '/core/dbconnect.php');
+require(__DIR__ . '/core/dbconnect.php');
 
 // create table if it does not exist
 $query = "CREATE TABLE IF NOT EXISTS documents(id int(10) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT, url varchar(256))";
@@ -17,7 +17,6 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
-$result->close();
 
 $query = "CREATE TABLE IF NOT EXISTS inverted_index(word varchar(256))";
 $result = $mysqli->query($query);
@@ -26,4 +25,4 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
-$result->close();
+$mysqli->close();

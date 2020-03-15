@@ -9,7 +9,7 @@
 
 function insert_document(string $url)
 {
-    require_once(__DIR__ . '/core/dbconnect.php');
+    require(__DIR__ . '/core/dbconnect.php');
     $url = $mysqli->real_escape_string($url);
     // insert the url if not exists
     $query = "INSERT INTO documents (url)
@@ -23,7 +23,6 @@ function insert_document(string $url)
         $mysqli->close();
         exit();
     }
-    $result->close();
 
     // get document id
     $query = "SELECT id FROM documents WHERE url = '$url'";
@@ -36,7 +35,6 @@ function insert_document(string $url)
     while ($row = $result->fetch_assoc()) {
         $doc_id = $row['id'];
     }
-    $result->close();
     $doc_id = str_pad((string) $doc_id, 10, 0, STR_PAD_LEFT);
 
     // check whether the column exists
@@ -50,7 +48,6 @@ function insert_document(string $url)
     while ($row = $result->fetch_assoc()) {
         $columns[] = $row['Field'];
     }
-    $result->close();
 
     $col_exists = FALSE;
     foreach ($columns as $column) {
@@ -60,25 +57,24 @@ function insert_document(string $url)
     }
     // add column if not exists
     if (!$col_exists) {
-        $query = "ALTER TABLE inverted_index ADD COLUMN $doc_id int(5) DEFAULT 0";
+        $query = "ALTER TABLE inverted_index ADD COLUMN `$doc_id` int(5)";
         $result = $mysqli->query($query);
         if (!$result) {
             print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
             $mysqli->close();
             exit();
         }
-        $result->close();
     }
 
     // initialize column with zero
-    $query = "UPDATE inverted_index SET $doc_id = 0";
+    $query = "UPDATE inverted_index SET `$doc_id` = 0";
     $result = $mysqli->query($query);
     if (!$result) {
         print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
         $mysqli->close();
         exit();
     }
-    $result->close();
 
     $mysqli->close();
+    return $doc_id;
 }

@@ -5,7 +5,7 @@
  * https://opensource.org/licenses/mit-license.php
  */
 
-require_once(__DIR__ . '/config.php');
+require(__DIR__ . "/config.php");
 
 $mysqli = new mysqli($host, $username, $password, $dbname);
 if ($mysqli->connect_error) {

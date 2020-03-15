@@ -7,10 +7,10 @@
  * insert word into database
  */
 
-function insert_word(array $word, int $doc_id)
+function insert_word(array $word, string $doc_id)
 {
-    require_once(__DIR__ . '/core/dbconnect.php');
-    $word = $mysqli->real_escape_string($word);
+    require(__DIR__ . '/core/dbconnect.php');
+    $word = $mysqli->real_escape_string($word['text']);
     // insert the word if not exists
     $query = "INSERT INTO inverted_index (word)
         SELECT * FROM (SELECT '$word') AS tmp
@@ -23,17 +23,15 @@ function insert_word(array $word, int $doc_id)
         $mysqli->close();
         exit();
     }
-    $result->close();
 
     // increment the number of words appeared
-    $query = "UPDATE inverted_index SET $doc_id = $doc_id + 1 WHERE word = '$word'";
+    $query = "UPDATE inverted_index SET `$doc_id` = `$doc_id` + 1 WHERE word = '$word'";
     $result = $mysqli->query($query);
     if (!$result) {
         print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
         $mysqli->close();
         exit();
     }
-    $result->close();
 
     $mysqli->close();
 }
