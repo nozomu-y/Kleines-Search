@@ -29,7 +29,7 @@ https://github.com/youaoi/php-mecab
 
 ## Versions
 
-- Ver1.0 2020/03/16
+- Ver 1.0 2020/03/16
 
 ## License
 

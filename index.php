@@ -64,7 +64,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p class="text-muted text-center"><strong>Kleines Search</strong>Ver1.0 by 18T Nozomu Yamazaki<br>Hosted on <a href="https://github.com/nozomu-y/Kleines-Search" target="_blank">GitHub</a></p>
+            <p class="text-muted text-center"><strong>Kleines Search</strong> Ver 1.0 by 18T Nozomu Yamazaki<br>Hosted on <a href="https://github.com/nozomu-y/Kleines-Search" target="_blank">GitHub</a></p>
         </div>
     </footer>
 
