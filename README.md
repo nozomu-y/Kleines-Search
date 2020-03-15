@@ -4,7 +4,7 @@ Search Engine developed for Chor Kleines website's Member's Area configured with
 
 Kleines Search enables you to search whatever information inside the Member's Area.
 
-**NOTE** This software is now under development and not yet deployed for practical use.
+<!-- **NOTE** This software is now under development and not yet deployed for practical use. -->
 
 ## Requirements
 
@@ -26,6 +26,10 @@ Requires [mecab](https://taku910.github.io/mecab/) (EUC-JP)
 https://github.com/youaoi/php-mecab
 
 **NOTE** The libraries above are not managed by git.
+
+## Versions
+
+- Ver1.0 2020/03/16
 
 ## License
 
