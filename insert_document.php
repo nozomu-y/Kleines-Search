@@ -7,13 +7,14 @@
  * insert document into database
  */
 
-function insert_document(string $url)
+function insert_document(string $url, string $title)
 {
     require(__DIR__ . '/core/dbconnect.php');
     $url = $mysqli->real_escape_string($url);
+    $title = $mysqli->real_escape_string($title);
     // insert the url if not exists
-    $query = "INSERT INTO documents (url)
-        SELECT * FROM (SELECT '$url') AS tmp
+    $query = "INSERT INTO documents (url, title, last_index)
+        SELECT * FROM (SELECT '$url', '$title', NOW()) AS tmp
         WHERE NOT EXISTS (
             SELECT url FROM documents WHERE url = '$url'
         ) LIMIT 1";
