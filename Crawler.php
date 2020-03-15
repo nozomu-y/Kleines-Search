@@ -7,7 +7,8 @@
  * Crawler Class
  */
 
-$url = "https://www.chorkleines.com/member/";
+// $url = "https://www.chorkleines.com/member/";
+$url = "https://www.chorkleines.com/member/download/18/past_member's_page";
 $crawler = new Crawler($url);
 
 class Crawler
@@ -19,7 +20,7 @@ class Crawler
         // memorize the document which are already indexed and also new
         $this->memory = array();
         require(__DIR__ . '/core/dbconnect.php');
-        $target = date("Y/m/d H:i:s", strtotime("-14 days", strtotime(date("Y/m/d"))));
+        $target = date("Y/m/d H:i:s", strtotime("-30 days", strtotime(date("Y/m/d"))));
         $query = "SELECT * FROM documents WHERE last_index IS NOT NULL AND last_index > '$target'";
         $result = $mysqli->query($query);
         if (!$result) {
