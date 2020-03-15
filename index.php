@@ -33,7 +33,7 @@
 
             <form action="./" method="GET" enctype="multipart/form-data" class="mb-5">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="search_query" value="<? echo $_GET['search_query']; ?>">
+                    <input type="text" class="form-control" name="search_query" maxlength="32" value="<? echo $_GET['search_query']; ?>">
                 </div>
                 <button type="submit" class="btn btn-dark">検索</button>
             </form>
