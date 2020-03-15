@@ -24,7 +24,7 @@
 
 <body>
     <nav class="navbar navbar-dark bg-dark mb-3">
-        <a class="navbar-brand" href="index.php">Kleines Search</a>
+        <a class="navbar-brand" href="./">Kleines Search</a>
     </nav>
 
     <div class="container">
