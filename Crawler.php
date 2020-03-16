@@ -71,7 +71,7 @@ class Crawler
 
         // when the file is pdf
         if (preg_match('/\.pdf$/', $url)) {
-            if (!in_array($html['url'], $this->memory, true)) {
+            if (!in_array($url, $this->memory, true)) {
                 $text = pdf_to_text($url);
                 $doc_id = insert_document($url, "");
                 $lines = explode("\n", $text);
@@ -85,9 +85,11 @@ class Crawler
                 }
                 // update last_index datetime
                 index_finished($doc_id);
-                echo 'depth:' . $depth . ' ' . $url . "\n";
-                return;
+                echo 'done: ' . $depth . ' ' . $url . "\n";
+            } else {
+                echo 'pass: ' . $depth . ' ' . $url . "\n";
             }
+            return;
         }
 
         $html = get_html($url);
@@ -111,6 +113,9 @@ class Crawler
             }
             // update last_index datetime
             index_finished($doc_id);
+            echo 'done: ' . $depth . ' ' .  $html['url'] . "\n";
+        } else {
+            echo 'pass: ' . $depth . ' ' .  $html['url'] . "\n";
         }
 
 
@@ -118,7 +123,6 @@ class Crawler
             $absolute_paths = get_absolute_paths($html);
             foreach ($absolute_paths as $absolute_path) {
                 $absolute_path = "https://www.chorkleines.com" . $absolute_path;
-                echo 'depth:' . $depth . ' ' .  $absolute_path . "\n";
                 $this->crawler($absolute_path, $depth + 1);
             }
         }
