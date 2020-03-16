@@ -52,3 +52,98 @@ function search(string $search_query)
     );
     return $search_result;
 }
+
+function search_detail(string $search_query, string $search_filetype)
+{
+    require_once(__DIR__ . "/mecab.php");
+    require(__DIR__ . '/core/dbconnect.php');
+
+    $cost = array();
+    $title = array();
+    $filetype = array();
+
+    if ($search_query == "" && $search_filetype != "") {
+        $query = "SELECT * FROM documents WHERE filetype='$search_filetype'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
+            $mysqli->close();
+            exit();
+        }
+        while ($row = $result->fetch_assoc()) {
+            $url = $row['url'];
+            $cost[$url] = 1;
+            $title[$url] = $row['title'];
+            $filetype[$url] = $row['filetype'];
+        }
+    } elseif ($search_query != "" && $search_filetype != "") {
+        $words = analyze($search_query);
+        foreach ($words as $word) {
+            $word = $word['text'];
+            $query = "SELECT * FROM inverted_index WHERE word='$word'";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
+                $mysqli->close();
+                exit();
+            }
+            if ($result->num_rows == 1) {
+                $row = $result->fetch_assoc();
+                foreach ($row as $doc_id => $num) {
+                    $query = "SELECT * FROM documents WHERE id='$doc_id' AND filetype='$search_filetype'";
+                    $result_2 = $mysqli->query($query);
+                    if (!$result_2) {
+                        print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
+                        $mysqli->close();
+                        exit();
+                    }
+                    $row_2 = $result_2->fetch_assoc();
+                    $url = $row_2['url'];
+                    if ($num != 0) {
+                        $cost[$url] += mb_strlen($word) * $num;
+                        $title[$url] = $row_2['title'];
+                        $filetype[$url] = $row_2['filetype'];
+                    }
+                }
+            }
+        }
+    } elseif ($search_query != "" && $search_filetype == "") {
+        $words = analyze($search_query);
+        foreach ($words as $word) {
+            $word = $word['text'];
+            $query = "SELECT * FROM inverted_index WHERE word='$word'";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
+                $mysqli->close();
+                exit();
+            }
+            if ($result->num_rows == 1) {
+                $row = $result->fetch_assoc();
+                foreach ($row as $doc_id => $num) {
+                    $query = "SELECT * FROM documents WHERE id='$doc_id'";
+                    $result_2 = $mysqli->query($query);
+                    if (!$result_2) {
+                        print('<strong>Query failed:</strong> ' . $mysqli->error . 'thrown in <strong>' . __FILE__ . '</strong> on line <strong>' . __LINE__ . '</strong>');
+                        $mysqli->close();
+                        exit();
+                    }
+                    $row_2 = $result_2->fetch_assoc();
+                    $url = $row_2['url'];
+                    if ($num != 0) {
+                        $cost[$url] += mb_strlen($word) * $num;
+                        $title[$url] = $row_2['title'];
+                        $filetype[$url] = $row_2['filetype'];
+                    }
+                }
+            }
+        }
+    }
+    arsort($cost);
+    $search_result = array(
+        "cost"      => $cost,
+        "title"     => $title,
+        "filetype"  => $filetype
+    );
+    return $search_result;
+}
