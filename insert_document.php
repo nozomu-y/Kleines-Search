@@ -10,7 +10,7 @@
 function insert_document(string $url, string $title)
 {
     require(__DIR__ . '/core/dbconnect.php');
-    if (preg_match('/\.(pdf|docx?|csv|txt|mp3|midi|mid|wav|zip|tar|gz|tgz|jpe?g|png|xlsx?|pptx?|css|js)$/', $url)) {
+    if (preg_match('/\.(pdf|docx?|csv|txt|mp3|midi|mid|wav|zip|tar|gz|tgz|jpe?g|png|xlsx?|pptx?|css|js|mscz)$/', $url)) {
         $filetype = pathinfo($url, PATHINFO_EXTENSION);
     } else {
         $filetype = '';
@@ -20,7 +20,7 @@ function insert_document(string $url, string $title)
     $filetype = $mysqli->real_escape_string($filetype);
     // insert the url if not exists
     $query = "INSERT INTO documents (url, title, filetype)
-        SELECT * FROM (SELECT '$url', '$title', '$filetype') AS tmp
+        SELECT * FROM (SELECT '$url' AS url, '$title' AS title, '$filetype' AS filetype) AS tmp
         WHERE NOT EXISTS (
             SELECT url FROM documents WHERE url = '$url'
         ) LIMIT 1";

@@ -14,7 +14,7 @@ if (php_sapi_name() != 'cli') {
 }
 
 // $url = "https://www.chorkleines.com/member/";
-$url = "https://www.chorkleines.com/member/download/18/presta/";
+$url = "https://www.chorkleines.com/member/download/19/presta/";
 $crawler = new Crawler($url);
 
 class Crawler
@@ -113,7 +113,7 @@ class Crawler
                 echo 'pass: ' . $depth . ' ' . $url . "\n";
             }
             return;
-        } elseif (preg_match('/\.(mp3|midi|mid|wav|zip|tar|gz|tgz|jpe?g|png|xlsx?|pptx?)$/', $url)) {    // files without texts
+        } elseif (preg_match('/\.(mp3|midi|mid|wav|zip|tar|gz|tgz|jpe?g|png|xlsx?|pptx?|mscz)$/', $url)) {    // files without texts
             if (!in_array($url, $this->memory, true)) {
                 $doc_id = insert_document($url, $title);
                 $words = analyze($title);
