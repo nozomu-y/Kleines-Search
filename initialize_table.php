@@ -18,6 +18,7 @@ $query = "CREATE TABLE IF NOT EXISTS documents(
         id int(10) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT, 
         url varchar(256),
         title varchar(256),
+        filetype varchar(32),
         last_index datetime
     )";
 $result = $mysqli->query($query);

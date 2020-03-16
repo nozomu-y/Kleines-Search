@@ -14,6 +14,7 @@ function search(string $search_query)
     $words = analyze($search_query);
     $cost = array();
     $title = array();
+    $filetype = array();
     foreach ($words as $word) {
         $word = $word['text'];
         $query = "SELECT * FROM inverted_index WHERE word='$word'";
@@ -38,14 +39,16 @@ function search(string $search_query)
                 if ($num != 0) {
                     $cost[$url] += mb_strlen($word) * $num;
                     $title[$url] = $row_2['title'];
+                    $filetype[$url] = $row_2['filetype'];
                 }
             }
         }
     }
     arsort($cost);
     $search_result = array(
-        "cost"  => $cost,
-        "title" => $title
+        "cost"      => $cost,
+        "title"     => $title,
+        "filetype"  => $filetype
     );
     return $search_result;
 }

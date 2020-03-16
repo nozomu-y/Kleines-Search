@@ -10,11 +10,17 @@
 function insert_document(string $url, string $title)
 {
     require(__DIR__ . '/core/dbconnect.php');
+    if (preg_match('/\.pdf$/', $url)) {
+        $filetype = 'PDF';
+    } else {
+        $filetype = '';
+    }
     $url = $mysqli->real_escape_string($url);
     $title = $mysqli->real_escape_string($title);
+    $filetype = $mysqli->real_escape_string($filetype);
     // insert the url if not exists
-    $query = "INSERT INTO documents (url, title)
-        SELECT * FROM (SELECT '$url', '$title') AS tmp
+    $query = "INSERT INTO documents (url, title, filetype)
+        SELECT * FROM (SELECT '$url', '$title', '$filetype') AS tmp
         WHERE NOT EXISTS (
             SELECT url FROM documents WHERE url = '$url'
         ) LIMIT 1";
