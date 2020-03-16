@@ -46,10 +46,10 @@ function get_html(string $url)
         foreach ($http_response_header as $response) {
             if (strpos($response, "Location") !== false) {
                 $location = $response;
+                $url_tmp = explode("Location: ", $location)[1];
+                $url_tmp = rel_to_url($url, $url_tmp);
+                return get_html($url_tmp);
             }
-        }
-        if (strpos($location, "https://www.chorkleines.com/member/") !== false) {
-            $url = explode("Location: ", $location)[1];
         }
     }
     $response = array(
