@@ -13,8 +13,8 @@ function insert_document(string $url, string $title)
     $url = $mysqli->real_escape_string($url);
     $title = $mysqli->real_escape_string($title);
     // insert the url if not exists
-    $query = "INSERT INTO documents (url, title, last_index)
-        SELECT * FROM (SELECT '$url', '$title', NOW()) AS tmp
+    $query = "INSERT INTO documents (url, title)
+        SELECT * FROM (SELECT '$url', '$title') AS tmp
         WHERE NOT EXISTS (
             SELECT url FROM documents WHERE url = '$url'
         ) LIMIT 1";
