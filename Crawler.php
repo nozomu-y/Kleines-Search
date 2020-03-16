@@ -35,7 +35,7 @@ class Crawler
         while ($row = $result->fetch_assoc()) {
             array_push($this->memory, $row['url']);
         }
-        $this->crawler($url, 0);
+        $this->crawler($url, "", 0);
     }
 
     /**
@@ -43,7 +43,7 @@ class Crawler
      * @param string $url
      * @param int $depth
      */
-    private function crawler(string $url, int $depth)
+    private function crawler(string $url, string $title, int $depth)
     {
         require_once(__DIR__ . "/get_html.php");
         require_once(__DIR__ . "/mecab.php");
@@ -73,7 +73,7 @@ class Crawler
         if (preg_match('/\.pdf$/', $url)) {
             if (!in_array($url, $this->memory, true)) {
                 $text = pdf_to_text($url);
-                $doc_id = insert_document($url, "");
+                $doc_id = insert_document($url, $title);
                 $lines = explode("\n", $text);
                 foreach ($lines as $line) {
                     if ($line != NULL) {
@@ -99,7 +99,10 @@ class Crawler
 
         if (!in_array($html['url'], $this->memory, true)) {
             $text = html_to_text($html);
-            $doc_id = insert_document($html['url'], $html['title']);
+            if ($html['title'] != "") {
+                $title = $html['title'];
+            }
+            $doc_id = insert_document($html['url'], $title);
             array_push($this->memory, $html['url']);
 
             $lines = explode("\n", $text);
@@ -122,8 +125,8 @@ class Crawler
         if ($depth < 1) {
             $absolute_paths = get_absolute_paths($html);
             foreach ($absolute_paths as $absolute_path) {
-                $absolute_path = "https://www.chorkleines.com" . $absolute_path;
-                $this->crawler($absolute_path, $depth + 1);
+                $url = "https://www.chorkleines.com" . $absolute_path['path'];
+                $this->crawler($url, $absolute_path['text'], $depth + 1);
             }
         }
         return;

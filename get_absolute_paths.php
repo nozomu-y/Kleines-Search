@@ -21,7 +21,10 @@ function get_absolute_paths(array $html)
         $rel = $link["href"];
         $absolute_path = url_to_abs(rel_to_url($html['url'], $rel));
         if ($absolute_path != NULL) {
-            array_push($absolute_paths, $absolute_path);
+            array_push($absolute_paths, array(
+                "path"  => $absolute_path,
+                "text"  => $link['text']
+            ));
         }
     }
     return $absolute_paths;
