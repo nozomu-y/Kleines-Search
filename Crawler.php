@@ -13,7 +13,8 @@ if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
 }
 
-$url = "https://www.chorkleines.com/member/download/18/";
+// $url = "https://www.chorkleines.com/member/";
+$url = "https://www.chorkleines.com/member/download/18/presta/";
 $crawler = new Crawler($url);
 
 class Crawler
@@ -66,6 +67,8 @@ class Crawler
         } elseif (strpos($url, "chorkleines.com/member/download/18/past_exam/") !== false) {
             return;
         } elseif (strpos($url, "chorkleines.com/member/wiki/") !== false) {
+            return;
+        } elseif (strpos($url, "chorkleines.com/member/kleines_search/") !== false) {
             return;
         }
 
