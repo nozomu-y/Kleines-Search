@@ -59,7 +59,7 @@
                     echo '<a href="' . $url . '" class="list-group-item list-group-item-action flex-column">';
                     echo '<div class="d-flex w-100 justify-content-between">';
                     echo '<h5 class="mb-1">' . $result['title'][$url] . '</h5>';
-                    echo '<small>コスト：' . $cost . '</small>';
+                    echo '<small>スコア：' . $cost . '</small>';
                     echo '</div>';
                     // echo '<p class="mb-1">' . $content . '</p>';
                     $url = explode("https://www.", $url)[1];
@@ -75,6 +75,9 @@
 
     <footer class="footer">
         <div class="container">
+            <p class="text-muted text-center">
+                形態素ごとの一致文字数をスコアとしています
+            </p>
             <p class="text-muted text-center">
                 <strong>Kleines Search</strong> Ver 1.0
                 <br>
