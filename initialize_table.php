@@ -7,6 +7,10 @@
  * create tables on initialization
  */
 
+if (php_sapi_name() != 'cli') {
+    throw new Exception('This application must be run on the command line.');
+}
+
 require(__DIR__ . '/core/dbconnect.php');
 
 // create table if it does not exist
@@ -31,3 +35,5 @@ if (!$result) {
     exit();
 }
 $mysqli->close();
+
+echo "Finished" . "\n";
