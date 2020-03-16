@@ -69,15 +69,19 @@
                 require_once(__DIR__ . "/search.php");
                 $result = search($_GET['search_query']);
                 foreach ($result['cost'] as $url => $cost) {
-                    echo '<a href="' . $url . '" class="list-group-item list-group-item-action flex-column">';
-                    echo '<div class="d-flex w-100 justify-content-between">';
-                    echo '<h5 class="mb-1">' . $result['title'][$url] . '</h5>';
-                    echo '<small>スコア：' . $cost . '</small>';
-                    echo '</div>';
-                    // echo '<p class="mb-1">' . $content . '</p>';
-                    $url = explode("https://www.", $url)[1];
-                    echo '<small class="d-block text-truncate">' . $url . '</small>';
-                    echo '</a>';
+                    if ($url != "") {
+                        echo '<a href="' . $url . '" class="list-group-item list-group-item-action flex-column">';
+                        echo '<div class="d-flex w-100 justify-content-between">';
+                        echo '<h5 class="mb-1">' . $result['title'][$url] . '</h5>';
+                        echo '<small>スコア：' . $cost . '</small>';
+                        echo '</div>';
+                        // echo '<p class="mb-1">' . $content . '</p>';
+                        if (strpos($url, "ttps://www.") !== false) {
+                            $url_short = explode("https://www.", $url)[1];
+                        }
+                        echo '</small><small class="d-block text-truncate">' . $url_short . '</small>';
+                        echo '</a>';
+                    }
                 }
                 echo '</div>';
             }
