@@ -30,6 +30,10 @@ function file_to_text(string $url)
         )
     );
     $options = stream_context_create($options);
-    $content = @file_get_contents($url, false, $options);
+    $content = file_get_contents($url, false, $options);
+    if ($content === false) {
+        return NULL;
+    }
+
     return $content;
 }

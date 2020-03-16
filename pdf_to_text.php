@@ -36,7 +36,11 @@ function pdf_to_text(string $url)
             )
         );
         $options = stream_context_create($options);
-        $content = @file_get_contents($url, false, $options);
+        $content = file_get_contents($url, false, $options);
+
+        if ($content === false) {
+            return NULL;
+        }
 
         // configuration of the file to upload
         $meta = new Google_Service_Drive_DriveFile(array(

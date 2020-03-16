@@ -76,6 +76,9 @@ class Crawler
         if (preg_match('/\.(pdf|docx?)$/', $url)) { // document files with texts
             if (!in_array($url, $this->memory, true)) {
                 $text = pdf_to_text($url);
+                if ($text == NULL) {
+                    return;
+                }
                 $doc_id = insert_document($url, $title);
                 $lines = explode("\n", $text);
                 foreach ($lines as $line) {
@@ -96,6 +99,9 @@ class Crawler
         } elseif (preg_match('/\.(csv|txt)$/', $url)) {   // text files
             if (!in_array($url, $this->memory, true)) {
                 $text = file_to_text($url);
+                if ($text == NULL) {
+                    return;
+                }
                 $doc_id = insert_document($url, $title);
                 $lines = explode("\n", $text);
                 foreach ($lines as $line) {
