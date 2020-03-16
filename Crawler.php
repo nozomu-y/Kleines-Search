@@ -50,6 +50,7 @@ class Crawler
         require_once(__DIR__ . "/mecab.php");
         require_once(__DIR__ . "/pdf_to_text.php");
         require_once(__DIR__ . "/html_to_text.php");
+        require_once(__DIR__ . "/file_to_text.php");
         require_once(__DIR__ . "/insert_document.php");
         require_once(__DIR__ . "/insert_word.php");
         require_once(__DIR__ . "/index_finished.php");
@@ -72,8 +73,7 @@ class Crawler
             return;
         }
 
-        // when the file is pdf
-        if (preg_match('/\.pdf$/', $url)) {
+        if (preg_match('/\.(pdf|docx?)$/', $url)) { // document files with texts
             if (!in_array($url, $this->memory, true)) {
                 $text = pdf_to_text($url);
                 $doc_id = insert_document($url, $title);
@@ -92,6 +92,41 @@ class Crawler
             } else {
                 echo 'pass: ' . $depth . ' ' . $url . "\n";
             }
+            return;
+        } elseif (preg_match('/\.(csv|txt)$/', $url)) {   // text files
+            if (!in_array($url, $this->memory, true)) {
+                $text = file_to_text($url);
+                $doc_id = insert_document($url, $title);
+                $lines = explode("\n", $text);
+                foreach ($lines as $line) {
+                    if ($line != NULL) {
+                        $words = analyze($line);
+                        foreach ($words as $word) {
+                            insert_word($word, $doc_id);
+                        }
+                    }
+                }
+                // update last_index datetime
+                index_finished($doc_id);
+                echo 'done: ' . $depth . ' ' . $url . "\n";
+            } else {
+                echo 'pass: ' . $depth . ' ' . $url . "\n";
+            }
+            return;
+        } elseif (preg_match('/\.(mp3|midi|mid|wav|zip|tar|gz|tgz|jpe?g|png|xlsx?|pptx?)$/', $url)) {    // files without texts
+            if (!in_array($url, $this->memory, true)) {
+                $doc_id = insert_document($url, $title);
+                $words = analyze($title);
+                foreach ($words as $word) {
+                    insert_word($word, $doc_id);
+                }
+                index_finished($doc_id);
+                echo 'done: ' . $depth . ' ' . $url . "\n";
+            } else {
+                echo 'pass: ' . $depth . ' ' . $url . "\n";
+            }
+            return;
+        } elseif (preg_match('/\.(css|js)$/', $url)) {   // files to ignore
             return;
         }
 

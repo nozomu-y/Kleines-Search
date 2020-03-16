@@ -10,8 +10,8 @@
 function insert_document(string $url, string $title)
 {
     require(__DIR__ . '/core/dbconnect.php');
-    if (preg_match('/\.pdf$/', $url)) {
-        $filetype = 'PDF';
+    if (preg_match('/\.(pdf|docx?|csv|txt|mp3|midi|mid|wav|zip|tar|gz|tgz|jpe?g|png|xlsx?|pptx?|css|js)$/', $url)) {
+        $filetype = pathinfo($url, PATHINFO_EXTENSION);
     } else {
         $filetype = '';
     }
