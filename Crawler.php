@@ -8,13 +8,17 @@
  */
 
 // $url = "https://www.chorkleines.com/member/";
-$url = "https://www.chorkleines.com/member/download/18/past_member's_page";
+
+if (php_sapi_name() != 'cli') {
+    throw new Exception('This application must be run on the command line.');
+}
+
+$url = "https://www.chorkleines.com/member/download/18/";
 $crawler = new Crawler($url);
 
 class Crawler
 {
     private $memory;
-    private $file = "./log.txt";
     function __construct($url)
     {
         // memorize the document which are already indexed and also new
@@ -65,6 +69,27 @@ class Crawler
             return;
         }
 
+        // when the file is pdf
+        if (preg_match('/\.pdf$/', $url)) {
+            if (!in_array($html['url'], $this->memory, true)) {
+                $text = pdf_to_text($url);
+                $doc_id = insert_document($url, "");
+                $lines = explode("\n", $text);
+                foreach ($lines as $line) {
+                    if ($line != NULL) {
+                        $words = analyze($line);
+                        foreach ($words as $word) {
+                            insert_word($word, $doc_id);
+                        }
+                    }
+                }
+                // update last_index datetime
+                index_finished($doc_id);
+                echo 'depth:' . $depth . ' ' . $url . "\n";
+                return;
+            }
+        }
+
         $html = get_html($url);
         if ($html == NULL) {
             return;
@@ -93,27 +118,10 @@ class Crawler
             $absolute_paths = get_absolute_paths($html);
             foreach ($absolute_paths as $absolute_path) {
                 $absolute_path = "https://www.chorkleines.com" . $absolute_path;
-                if (preg_match('/\.pdf$/', $rel_path)) { // if the url ends with '.pdf'
-                    file_put_contents($this->file, 'depth:' . $depth . 'matched pdf: ' . $absolute_path . "\n", FILE_APPEND | LOCK_EX);
-                    echo 'depth:' . $depth . 'matched pdf: ' . $absolute_path . "\n";
-                    $text = pdf_to_text($absolute_path);
-                    $doc_id = insert_document($absolute_path, "");
-                    $lines = explode("\n", $text);
-                    foreach ($lines as $line) {
-                        if ($line != NULL) {
-                            $words = analyze($line);
-                            foreach ($words as $word) {
-                                insert_word($word, $doc_id);
-                            }
-                        }
-                    }
-                } else {
-                    file_put_contents($this->file, 'depth:' . $depth .  $absolute_path . "\n", FILE_APPEND | LOCK_EX);
-                    echo 'depth:' . $depth .  $absolute_path . "\n";
-                    $this->crawler($absolute_path, $depth + 1);
-                }
+                echo 'depth:' . $depth . ' ' .  $absolute_path . "\n";
+                $this->crawler($absolute_path, $depth + 1);
             }
         }
-        return 'done\n';
+        return;
     }
 }
