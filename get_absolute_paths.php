@@ -116,6 +116,9 @@ function url_to_abs($url)
     if (preg_match('/^https*\:\/\//', $url)) {
         $parse = parse_url($url);
         if (strpos($parse['host'], $domain) !== false) {
+            if (isset($parse['query'])) {
+                return $parse['path'] . '?' . $parse['query'];
+            }
             return $parse['path'];
         }
     }
