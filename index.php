@@ -45,19 +45,33 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark bg-dark mb-3">
+    <nav class="sticky-top navbar navbar-expand-md navbar-dark shadow bg-dark py-2">
         <a class="navbar-brand" href="./">Kleines Search</a>
+        <button class="navbar-toggler navbar-button" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mr-2">
+                    <a class="nav-link" href="/member/">団員ページ</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <div class="container">
+    <div class="container mt-3">
         <div class="text-center">
             <h2 class="mb-3">Kleines Search</h2>
 
             <form action="./" method="GET" enctype="multipart/form-data" class="mb-5">
-                <div class="form-group">
+                <div class="input-group mb-2">
                     <input type="text" class="form-control" name="search_query" maxlength="32" value="<? echo $_GET['search_query']; ?>">
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" type="submit">検索</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-dark">検索</button>
+                <a href="./detail.php">詳細検索</a>
             </form>
         </div>
 
@@ -72,8 +86,8 @@
                     if ($url != "") {
                         echo '<a href="' . $url . '" class="list-group-item list-group-item-action flex-column">';
                         echo '<div class="d-flex w-100 justify-content-between">';
-                        echo '<h5 class="mb-1">' . $result['title'][$url] . '</h5>';
-                        echo '<small>スコア：' . $cost . '</small>';
+                        echo '<h6 class="mb-1">' . $result['title'][$url] . '</h6>';
+                        echo '<small class="text-nowrap">スコア：' . $cost . '</small>';
                         echo '</div>';
                         // echo '<p class="mb-1">' . $content . '</p>';
                         if (strpos($url, "ttps://www.") !== false) {
