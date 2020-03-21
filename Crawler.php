@@ -14,7 +14,7 @@ if (php_sapi_name() != 'cli') {
 }
 
 // $url = "https://www.chorkleines.com/member/";
-$url = "https://www.chorkleines.com/member/download/19/presta/";
+$url = "https://www.chorkleines.com/member/download/18/";
 $crawler = new Crawler($url);
 
 class Crawler
@@ -89,6 +89,10 @@ class Crawler
                         }
                     }
                 }
+                $words = analyze($title);
+                foreach ($words as $word) {
+                    insert_word($word, $doc_id);
+                }
                 // update last_index datetime
                 index_finished($doc_id);
                 echo 'done: ' . $depth . ' ' . $url . "\n";
@@ -111,6 +115,10 @@ class Crawler
                             insert_word($word, $doc_id);
                         }
                     }
+                }
+                $words = analyze($title);
+                foreach ($words as $word) {
+                    insert_word($word, $doc_id);
                 }
                 // update last_index datetime
                 index_finished($doc_id);
@@ -158,6 +166,10 @@ class Crawler
                     }
                 }
             }
+            $words = analyze($title);
+            foreach ($words as $word) {
+                insert_word($word, $doc_id);
+            }
             // update last_index datetime
             index_finished($doc_id);
             echo 'done: ' . $depth . ' ' .  $html['url'] . "\n";
@@ -166,7 +178,7 @@ class Crawler
         }
 
 
-        if ($depth < 1) {
+        if ($depth < 3) {
             $absolute_paths = get_absolute_paths($html);
             foreach ($absolute_paths as $absolute_path) {
                 $url = "https://www.chorkleines.com" . $absolute_path['path'];
